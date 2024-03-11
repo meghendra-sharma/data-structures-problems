@@ -1,0 +1,86 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+import java.util.Arrays;
+public class Main
+{
+	public static void main(String[] args) {
+	    int temp[] = new int[6];
+	    int arr[] = {54 , 45 , 6 ,7 ,100 };
+// 		System.out.println(merge(arr , temp , 0 , 1 ,1 ));
+        mergeSort(arr , temp , 0 , 4);
+		Arrays.stream(arr).forEach(element -> System.out.print(element + " "));
+		
+		
+	}
+	
+	//function to perform merge sort recursively
+	public static void mergeSort(int arr[] ,int temp[] ,  int low , int high){
+	    if(low == high){
+	        return;
+	    }
+	    
+	    int mid = (low + high) / 2 ;
+	    //left array
+	     mergeSort(arr , temp , low , mid);
+	     mergeSort(arr , temp , mid+1 , high);
+	     merge(arr , temp , low , high , mid);
+	    
+	    
+	    
+	}
+	
+	//merging function
+	//merges the array which has two halfs independently sorted
+	//copies the element into the temo array first
+	//then merge the original array in the sorted order - ascending here
+	//parameters - lowest index , highest index and the middle element index(partion of the two sorted half)
+	public static void  merge(int arr[] , int temp[] , int low , int high , int mid){
+	    
+	    //setting the pointers for both the sorted part of the original array
+	    int leftStart = low, leftEnd = mid ,  rightStart = mid+1, rightEnd = high, currentIndex = low; 
+	    
+	    //copying the elements in the temp array at the same index
+        for(int i=low;i<=high;i++){
+            temp[i] = arr[i];
+        }
+        
+        
+        //merging the two sorted halfs of the original array
+        while(leftStart <= leftEnd && rightStart <= rightEnd){
+            if(temp[leftStart] <= temp[rightStart]){
+                arr[currentIndex] = temp[leftStart];
+                leftStart++;
+                currentIndex++;
+            }
+            else{
+                arr[currentIndex] = temp[rightStart];
+                rightStart++;
+                currentIndex++;
+            }
+        }
+	    
+	    //copying the remaining elements of first half
+	    while(leftStart<=leftEnd){
+	        arr[currentIndex] = temp[leftStart];
+	        currentIndex++;
+	        leftStart++;
+	    }
+	    
+	    //copying the remaining elements of the second half
+	    while(rightStart <= rightEnd){
+	        arr[currentIndex] = temp[rightStart];
+	        currentIndex++;
+	        rightStart++;
+	    }
+	    
+	    
+	    //returning the sorted merged array
+	    
+	   
+	}
+}
